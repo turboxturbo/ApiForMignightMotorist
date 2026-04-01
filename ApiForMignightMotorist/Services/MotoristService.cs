@@ -1,5 +1,6 @@
 ﻿using ApiForMignightMotorist.DataBaseContext;
 using ApiForMignightMotorist.Interfaces;
+using ApiForMignightMotorist.Models;
 using ApiForMignightMotorist.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,5 +24,102 @@ namespace ApiForMignightMotorist.Services
             }
             return new OkObjectResult(new { status = true });
         }
+        public async Task<IActionResult> SignUp(RegReq regReq)
+        {
+            var login = await _context.Logins.FirstOrDefaultAsync(l => l.Login == regReq.Login);
+            if (login != null)
+            {
+                return new BadRequestObjectResult(new { status = false, message = "Login already exists" });
+            }
+            var user = new Users
+            {
+                UserName = regReq.Username,
+                Coins = 0,
+                SelectedScin = null
+            };
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            var newLogin = new Logins
+            {
+                Login = regReq.Login,
+                Password = regReq.Password,
+                IdUser = user.IdUser
+            };
+            await _context.Logins.AddAsync(newLogin);
+            await _context.SaveChangesAsync();
+            return new OkObjectResult(new { status = true });
+        }
+        public async Task<IActionResult> GetUserInfo(CurrentUser currentuser)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == currentuser.IdUser);
+            if (user == null)
+            {
+                return new NotFoundObjectResult(new { status = false });
+            }
+            return new OkObjectResult(new { status = true, userName = user.UserName, coins = user.Coins, selectedScin = user.SelectedScin });
+        }
+        public async Task<IActionResult> GetAllScins()
+        {
+            var scins = await _context.Scins.ToListAsync();
+            if (scins == null || scins.Count == 0)
+            {
+                return new NotFoundObjectResult(new { status = false });
+            }
+            return new OkObjectResult(new { status = false, scins = scins });
+        }
+        public async Task<IActionResult> BuyScin(BuyScin buyScin)
+        {
+            var scin = await _context.Scins.FirstOrDefaultAsync(s => s.NameScin == buyScin.NameScin);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == buyScin.IdUser);
+            if (scin == null || user == null)
+            {
+                return new NotFoundObjectResult(new { status = false });
+            }
+            if (user.Coins < scin.Coins)
+            {
+                return new BadRequestObjectResult(new { status = false, message = "Not enough coins" });
+            }
+            user.Coins -= scin.Coins;
+            _context.Users.Update(user);
+            var userScin = new UserScins
+            {
+                IdUser = user.IdUser,
+                IdScin = scin.IdScin
+            };
+            await _context.UserScins.AddAsync(userScin);
+            await _context.SaveChangesAsync();
+            return new OkObjectResult(new { status = true });
+        }
+
+        public async Task<IActionResult> GetMyScins(CurrentUser currentUser)
+        {
+            var scins = await _context.UserScins.Where(s => s.IdUser == currentUser.IdUser).ToListAsync();
+            if (scins.Count == 0 || scins == null)
+            {
+                return new NotFoundObjectResult(new { status = false });
+            }
+            return new OkObjectResult(new { status = true, scins = scins });
+        }
+        public async Task<IActionResult> SelectScin(CurrentScin currentScin)
+        {
+            var scin = await _context.Scins.FirstOrDefaultAsync(s => s.NameScin == currentScin.NameScin);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == currentScin.IdUser);
+            if (scin == null || user == null)
+            {
+                return new NotFoundObjectResult(new { status = false });
+            }
+            var userscin = await _context.UserScins.FirstOrDefaultAsync(s => s.IdScin == scin.IdScin && s.IdUser == currentScin.IdUser);
+            if (userscin == null)
+            {
+                return new NotFoundObjectResult(new { status = false });
+            }
+
+            user.SelectedScin = currentScin.NameScin;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return new OkObjectResult(new { status = true });
+
+        }
+
     }
 }
