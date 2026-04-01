@@ -1,0 +1,6 @@
+@ApiForMignightMotorist_HostAddress = http://localhost:5171
+
+GET {{ApiForMignightMotorist_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
