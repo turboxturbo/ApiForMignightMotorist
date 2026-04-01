@@ -7,5 +7,6 @@ namespace ApiForMignightMotorist.Models
         [Key]
         public int IdScin { get; set; }
         public string NameScin { get; set; }
+        public int Coins { get; set; }
     }
 }

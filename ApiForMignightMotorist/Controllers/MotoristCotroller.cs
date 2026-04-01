@@ -16,7 +16,7 @@ namespace ApiForMignightMotorist.Controllers
             _motoristService = motoristService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("auth")]
         public async Task<IActionResult> Authorization(Auth auth)
         {
