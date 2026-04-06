@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiForMignightMotorist.Migrations
 {
     [DbContext(typeof(ContextDb))]
-    [Migration("20260406092750_first")]
+    [Migration("20260406112224_first")]
     partial class first
     {
         /// <inheritdoc />
@@ -105,6 +105,7 @@ namespace ApiForMignightMotorist.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("SelectedScin")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("UserName")

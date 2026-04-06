@@ -102,6 +102,7 @@ namespace ApiForMignightMotorist.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("SelectedScin")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("UserName")

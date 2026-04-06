@@ -33,7 +33,7 @@ namespace ApiForMignightMotorist.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserName = table.Column<string>(type: "text", nullable: false),
                     Coins = table.Column<int>(type: "integer", nullable: false),
-                    SelectedScin = table.Column<string>(type: "text", nullable: true)
+                    SelectedScin = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

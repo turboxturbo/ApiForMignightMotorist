@@ -22,7 +22,7 @@ namespace ApiForMignightMotorist.Services
             {
                 return new OkObjectResult(new { status = false });
             }
-            return new OkObjectResult(new { status = true });
+            return new OkObjectResult(new { status = true, iduser = login.IdUser });
         }
         public async Task<IActionResult> SignUp(RegReq regReq)
         {
@@ -35,7 +35,7 @@ namespace ApiForMignightMotorist.Services
             {
                 UserName = regReq.Username,
                 Coins = 0,
-                SelectedScin = null
+                SelectedScin = "Scin1"
             };
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();

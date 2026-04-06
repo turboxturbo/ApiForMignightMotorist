@@ -9,6 +9,6 @@ namespace ApiForMignightMotorist.Models
         public int IdUser { get; set; }
         public string UserName { get; set; }
         public int Coins { get; set; }
-        public string? SelectedScin {  get; set; }
+        public string SelectedScin {  get; set; }
     }
 }
