@@ -20,7 +20,7 @@ namespace ApiForMignightMotorist.Services
             var login = await _context.Logins.FirstOrDefaultAsync(l => l.Login == auth.Login && l.Password == auth.Password);
             if (login == null)
             {
-                return new NotFoundObjectResult(new { status = false });
+                return new OkObjectResult(new { status = false });
             }
             return new OkObjectResult(new { status = true });
         }
@@ -29,7 +29,7 @@ namespace ApiForMignightMotorist.Services
             var login = await _context.Logins.FirstOrDefaultAsync(l => l.Login == regReq.Login);
             if (login != null)
             {
-                return new BadRequestObjectResult(new { status = false, message = "Login already exists" });
+                return new OkObjectResult(new { status = false, message = "Login already exists" });
             }
             var user = new Users
             {
@@ -54,7 +54,7 @@ namespace ApiForMignightMotorist.Services
             var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == currentuser.IdUser);
             if (user == null)
             {
-                return new NotFoundObjectResult(new { status = false });
+                return new OkObjectResult(new { status = false });
             }
             return new OkObjectResult(new { status = true, userName = user.UserName, coins = user.Coins, selectedScin = user.SelectedScin });
         }
@@ -63,7 +63,7 @@ namespace ApiForMignightMotorist.Services
             var scins = await _context.Scins.ToListAsync();
             if (scins == null || scins.Count == 0)
             {
-                return new NotFoundObjectResult(new { status = false });
+                return new OkObjectResult(new { status = false });
             }
             return new OkObjectResult(new { status = false, scins = scins });
         }
@@ -73,11 +73,11 @@ namespace ApiForMignightMotorist.Services
             var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == buyScin.IdUser);
             if (scin == null || user == null)
             {
-                return new NotFoundObjectResult(new { status = false });
+                return new OkObjectResult(new { status = false });
             }
             if (user.Coins < scin.Coins)
             {
-                return new BadRequestObjectResult(new { status = false, message = "Not enough coins" });
+                return new OkObjectResult(new { status = false, message = "Not enough coins" });
             }
             user.Coins -= scin.Coins;
             _context.Users.Update(user);
@@ -96,7 +96,7 @@ namespace ApiForMignightMotorist.Services
             var scins = await _context.UserScins.Where(s => s.IdUser == currentUser.IdUser).ToListAsync();
             if (scins.Count == 0 || scins == null)
             {
-                return new NotFoundObjectResult(new { status = false });
+                return new OkObjectResult(new { status = false });
             }
             return new OkObjectResult(new { status = true, scins = scins });
         }
@@ -106,12 +106,12 @@ namespace ApiForMignightMotorist.Services
             var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == currentScin.IdUser);
             if (scin == null || user == null)
             {
-                return new NotFoundObjectResult(new { status = false });
+                return new OkObjectResult(new { status = false });
             }
             var userscin = await _context.UserScins.FirstOrDefaultAsync(s => s.IdScin == scin.IdScin && s.IdUser == currentScin.IdUser);
             if (userscin == null)
             {
-                return new NotFoundObjectResult(new { status = false });
+                return new OkObjectResult(new { status = false });
             }
 
             user.SelectedScin = currentScin.NameScin;
