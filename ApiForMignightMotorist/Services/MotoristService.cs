@@ -49,7 +49,7 @@ namespace ApiForMignightMotorist.Services
             await _context.SaveChangesAsync();
             var newuserscin = new UserScins
             {
-                IdScin = 2,
+                IdScin = 1,
                 IdUser = user.IdUser
             };
             await _context.UserScins.AddAsync(newuserscin);
