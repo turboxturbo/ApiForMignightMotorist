@@ -47,16 +47,25 @@ namespace ApiForMignightMotorist.Services
             };
             await _context.Logins.AddAsync(newLogin);
             await _context.SaveChangesAsync();
+            var newuserscin = new UserScins
+            {
+                IdScin = 2,
+                IdUser = user.IdUser
+            };
+            await _context.UserScins.AddAsync(newuserscin);
+            await _context.SaveChangesAsync();
+
             return new OkObjectResult(new { status = true });
         }
         public async Task<IActionResult> GetUserInfo(CurrentUser currentuser)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == currentuser.IdUser);
-            if (user == null)
+            var userscins = await _context.UserScins.Where(us => us.IdUser == currentuser.IdUser).Include(s => s.Scins).ToListAsync();
+            if (user == null || userscins == null || userscins.Count == 0)
             {
                 return new OkObjectResult(new { status = false });
             }
-            return new OkObjectResult(new { status = true, userName = user.UserName, coins = user.Coins, selectedScin = user.SelectedScin });
+            return new OkObjectResult(new { status = true, userName = user.UserName, coins = user.Coins, selectedScin = user.SelectedScin, userscins = userscins });
         }
         public async Task<IActionResult> GetAllScins()
         {
@@ -65,7 +74,7 @@ namespace ApiForMignightMotorist.Services
             {
                 return new OkObjectResult(new { status = false });
             }
-            return new OkObjectResult(new { status = false, scins = scins });
+            return new OkObjectResult(new { status = true, scins = scins });
         }
         public async Task<IActionResult> BuyScin(BuyScin buyScin)
         {
