@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiForMignightMotorist.Migrations
 {
     [DbContext(typeof(ContextDb))]
-    [Migration("20260407104707_first")]
+    [Migration("20260409143412_first")]
     partial class first
     {
         /// <inheritdoc />
