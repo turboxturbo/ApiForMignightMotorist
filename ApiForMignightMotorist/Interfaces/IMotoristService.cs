@@ -12,5 +12,6 @@ namespace ApiForMignightMotorist.Interfaces
         Task<IActionResult> GetMyScins(CurrentUser currentUser);
         Task<IActionResult> BuyScin(BuyScin buyScin);
         Task<IActionResult> SelectScin(CurrentScin currentScin);
+        Task<IActionResult> AddWin(CurrentUser currentuser);
     }
 }

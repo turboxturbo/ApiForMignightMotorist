@@ -58,5 +58,11 @@ namespace ApiForMignightMotorist.Controllers
         {
             return await _motoristService.SelectScin(currentScin);
         }
+        [HttpPost]
+        [Route("addwin")]
+        public async Task<IActionResult> AddWin(CurrentUser currentuser)
+        {
+            return await _motoristService.AddWin(currentuser);
+        }
     }
 }

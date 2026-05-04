@@ -129,6 +129,27 @@ namespace ApiForMignightMotorist.Services
             return new OkObjectResult(new { status = true });
 
         }
+        public async Task<IActionResult> AddWin(CurrentUser currentuser)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == currentuser.IdUser);
+            if (user == null)
+            {
+                return new OkObjectResult(new { status = false });
+            }
+            try
+            {
+                user.Coins += 1;
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+                return new OkObjectResult(new { status = true });
+            }
+            catch (Exception ex)
+            {
+                return new OkObjectResult(new { status = false});
+            }
+            
+
+        }
 
     }
 }
