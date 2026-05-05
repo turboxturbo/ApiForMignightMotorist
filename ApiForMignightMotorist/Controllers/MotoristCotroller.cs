@@ -52,13 +52,13 @@ namespace ApiForMignightMotorist.Controllers
         {
             return await _motoristService.BuyScin(buyScin);
         }
-        [HttpPost]
+        [HttpPut]
         [Route("selectscin")]
         public async Task<IActionResult> SelectScin(CurrentScin currentScin)
         {
             return await _motoristService.SelectScin(currentScin);
         }
-        [HttpPost]
+        [HttpPut]
         [Route("addwin")]
         public async Task<IActionResult> AddWin(CurrentUser currentuser)
         {

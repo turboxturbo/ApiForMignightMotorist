@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace ApiForMignightMotorist.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,10 +14,10 @@ namespace ApiForMignightMotorist.Migrations
                 name: "Scins",
                 columns: table => new
                 {
-                    IdScin = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NameScin = table.Column<string>(type: "text", nullable: false),
-                    Coins = table.Column<int>(type: "integer", nullable: false)
+                    IdScin = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    NameScin = table.Column<string>(type: "TEXT", nullable: false),
+                    Coins = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,11 +28,11 @@ namespace ApiForMignightMotorist.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    IdUser = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserName = table.Column<string>(type: "text", nullable: false),
-                    Coins = table.Column<int>(type: "integer", nullable: false),
-                    SelectedScin = table.Column<string>(type: "text", nullable: false)
+                    IdUser = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    Coins = table.Column<int>(type: "INTEGER", nullable: false),
+                    SelectedScin = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,11 +43,11 @@ namespace ApiForMignightMotorist.Migrations
                 name: "Logins",
                 columns: table => new
                 {
-                    IdLogin = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Login = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
-                    IdUser = table.Column<int>(type: "integer", nullable: false)
+                    IdLogin = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Login = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    IdUser = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,10 +64,10 @@ namespace ApiForMignightMotorist.Migrations
                 name: "UserScins",
                 columns: table => new
                 {
-                    IdUserScins = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    IdUser = table.Column<int>(type: "integer", nullable: false),
-                    IdScin = table.Column<int>(type: "integer", nullable: false)
+                    IdUserScins = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdUser = table.Column<int>(type: "INTEGER", nullable: false),
+                    IdScin = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

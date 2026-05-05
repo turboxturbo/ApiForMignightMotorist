@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ContextDb>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("TestDbString")), ServiceLifetime.Scoped);
+    options.UseSqlite(builder.Configuration.GetConnectionString("TestDbString")), ServiceLifetime.Scoped);
 builder.Services.AddScoped<IMotoristService, MotoristService>();
 var app = builder.Build();
 
